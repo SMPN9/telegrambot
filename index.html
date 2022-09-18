@@ -154,11 +154,20 @@ const data=JSON.parse(xhttp.responseText);
 var ids;
 var pess;
 for ( var k=0;k<data.result.length;k++){ 
+
+if (data.result[k].callback_query){
+var pes="Id.Telegram Anda: "+data.result[k].callback_query.from.id+"%0ANama: "+data.result[k].callback_query.from.first_name+"%0AUser Name :"+data.result[k].callback_query.from.username;
+sendtele(data.result[k].callback_query.id,pes,3,333);upid=data.result[k].update_id+1;
+
+setTimeout(function(){  if(stop==1){ gotele();} else {b13.style.display="block"}  },1000);
+
+return}
+   
 var row = tbb.insertRow(-1)
 	row.insertCell(0).innerHTML=hit;
 	row.insertCell(1).innerHTML=data.result[k].message.chat.id
 	ids=data.result[k].message.chat.id;
-	if (data.result[k].message.text){row.insertCell(2).innerHTML=data.result[k].message.text;pess=data.result[k].message.text;gocek(ids,pess);} else { 
+	if (data.result[k].message.text){row.insertCell(2).innerHTML=data.result[k].message.text;pess=data.result[k].message.text;gocek(ids,pess,data.result[k].message.from.first_name);} else { 
 	  if (data.result[k].message.caption){ row.insertCell(2).innerHTML=data.result[k].message.caption;pess=data.result[k].message.caption} else{
 	pess='tdk ada caption'
 	row.insertCell(2).innerHTML=''}
@@ -167,6 +176,7 @@ var row = tbb.insertRow(-1)
      hit++;
 upid=data.result[k].update_id+1;
 }
+
 setTimeout(function(){  if(stop==1){ gotele();} else {b13.style.display="block"}  },1000)
 }
 xhttp.onerror=function(e){alert("tidak ada koneksi internet");b13.style.display="block";b133.style.display="none";stop=0}
@@ -176,18 +186,35 @@ xhttp.send();
 function sendtele(id,pesan,kode,idpt){
 var kirim=''
 if (kode==0){kirim=mytoken+"/sendMessage?chat_id="+id+"&text="+pesan+"&parse_mode=markdown"}
-else {kirim=mytoken+"/sendPhoto?chat_id="+id+"&photo="+idpt+"&caption="+pesan+"&parse_mode=markdown"}
+else {
+  if (kode==3){kirim=mytoken+"/answerCallbackQuery?callback_query_id="+id+"&text="+pesan+"&show_alert=true&parse_mode=markdown"} 
+  else{
+    if (kode==4){kirim=mytoken+"/sendMessage?chat_id="+id+"&text="+pesan+"&reply_markup="+start()+"&parse_mode=markdown" ;
+	     
+		}
+	else {
+	 
+	 if (kode==5){kirim=mytoken+"/sendMessage?chat_id="+id+"&text="+pesan+"&reply_markup="+start1()+"&parse_mode=markdown" ;}
+	else {
+kirim=mytoken+"/sendPhoto?chat_id="+id+"&photo="+idpt+"&caption="+pesan+"&parse_mode=markdown"}}}
+}
+
 const xhttp = new XMLHttpRequest();
 xhttp.onload = function() 
-{
+{   
 const data=JSON.parse(xhttp.responseText);  
 }
 xhttp.onerror=function(e){}
 xhttp.open("POST",kirim)
 xhttp.send()
 }
-function gocek(id,pesan){
+function gocek(id,pesan,nama){
   var bb=0;
+  if (pesan.toUpperCase()=="/START" || pesan.toUpperCase()=="MULAI KEMBALI"){ pesan="Selamat Datang *"+nama+"* ID.Kamu *"+id+"*" ;sendtele(id,pesan,4,0);
+  
+  pesan="Untuk cek NIS, Silahkam masukkan NIS Anda !";sendtele(id,pesan,5,0)
+  
+  ;return  }
 	for ( var i=0;i<excelRows.length;i++){ 
 	
 	      if( excelRows[i].NIS==pesan){
@@ -210,5 +237,27 @@ if (dgg == ""){
 function goupdate(){
 localStorage.setItem('dataxls',JSON.stringify(excelRows))  
 }
+function start() {
+  var keyboard ={
+    "inline_keyboard": [
+
+[{"text": "INFO ID","callback_data": 1}]]
+   }
+    return JSON.stringify(keyboard)
+}
+function start1(){
+ var keyboard ={
+    keyboard: [
+      [ 
+       "MULAI KEMBALI",
+      ]
+    ]
+     ,
+      "resize_keyboard":true
+  } 
+ return JSON.stringify(keyboard)
+}
+ 
+
   </script></body>
 </html>
