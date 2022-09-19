@@ -50,15 +50,16 @@ table td:nth-child(1) {  font-weight:bold;text-align:center;
 	</style>    
   <center>
 <button  id="b2" onclick="ddw()"><i class="fa fa-download" style="font-size:20px"></i>  Download Telegrambot.xlsx</button><br/>
-<input type="text" id="token" placeholder="Masukkan Token Bot di sini"  /><button id="b15" onclick="gosimp()"><i class="fa fa-check-square-o" style="font-size:20px"></i>   Simpan Token </button><br/>
+<input type="text" id="token" placeholder="Masukkan Token Bot di sini"  /><button id="b15" onclick="gosimp()"><i class="fa fa-check-square-o" style="font-size:20px"></i>   Simpan</button><br/>
 <input type="file"  style='display:none' onchange="Upload()" id="fileUpload" />
  <button id="b14" onclick="file.click()"><i class="fa fa-file-excel-o" style="font-size:20px"></i> Cari File </button><br/>
 <button id="b13" onclick="stop=1;gotele();this.style.display='none'"><i class="fa fa-toggle-right" style="font-size:20px"></i>   Start Bot</button><br/>
-<button id="b133" onclick="stop=0;this.style.display='none'"><i class="fa fa-spinner fa-spin" style="font-size:20px"></i> Stop Bot</button><br/>
+<button id="b133" onclick="stop=0;this.style.display='none';xhttp.abort();b13.style.display='block'"><i class="fa fa-spinner fa-spin" style="font-size:20px"></i> Stop Bot</button><br/>
 <table id='tb' border='1'><tr><th style="background:green;text-align:left;font-size:20px" colspan="4"><i class="fa fa-vcard-o" style="font-size:20px"></i> Chat Masuk</th></tr><tr><th>N0</th><th>ID</th><th>PESAN</th><th>ID FOTO</th></tr></table><p/><br/>
 <table id='tbs' border='1'><tr><th style="background:green;text-align:left;font-size:20px" colspan="4"><i class="fa fa-newspaper-o" style="font-size:20px"></i>  Data Excel</th></tr><tr><th>NIS</th><th>NAMA</th><th>TGL_LAHIR</th><th>ID_FOTO</th></tr></table><p/><br/>
 </center>
     <script>
+	var xhttp;
 	var isitbl='';
 	var mytoken='';
 	var comb='';
@@ -147,7 +148,7 @@ function ddw(){
  var upid=0;
 function gotele(){
 if(stop==1){ b133.style.display="block" }
-const xhttp = new XMLHttpRequest();
+ xhttp = new XMLHttpRequest();
 xhttp.onload = function() 
 {
 const data=JSON.parse(xhttp.responseText);
@@ -172,7 +173,7 @@ var row = tbb.insertRow(-1)
 	pess='tdk ada caption'
 	row.insertCell(2).innerHTML=''}
 	}
-	 if (data.result[k].message.photo){row.insertCell(3).innerHTML=data.result[k].message.photo[1].file_id } else { row.insertCell(3).innerHTML=''}
+	 if (data.result[k].message.photo){row.insertCell(3).innerHTML=data.result[k].message.photo[(data.result[k].message.photo.length)-1].file_id } else { row.insertCell(3).innerHTML=''}
      hit++;
 upid=data.result[k].update_id+1;
 }
@@ -198,11 +199,10 @@ else {
 	else {
 kirim=mytoken+"/sendPhoto?chat_id="+id+"&photo="+idpt+"&caption="+pesan+"&parse_mode=markdown"}}}
 }
-
-const xhttp = new XMLHttpRequest();
+ xhttp = new XMLHttpRequest();
 xhttp.onload = function() 
 {   
-const data=JSON.parse(xhttp.responseText);  
+const data=JSON.parse(xhttp.responseText); 
 }
 xhttp.onerror=function(e){}
 xhttp.open("POST",kirim)
@@ -211,31 +211,33 @@ xhttp.send()
 function gocek(id,pesan,nama){
   var bb=0;
   if (pesan.toUpperCase()=="/START" || pesan.toUpperCase()=="MULAI KEMBALI"){ pesan="Selamat Datang *"+nama+"* ID.Kamu *"+id+"*" ;sendtele(id,pesan,4,0);
-  
   pesan="Untuk cek NIS, Silahkam masukkan NIS Anda !";sendtele(id,pesan,5,0)
-  
   ;return  }
 	for ( var i=0;i<excelRows.length;i++){ 
 	
 	      if( excelRows[i].NIS==pesan){
 		   bb=1;
-		   pesan="*NIS : *"+excelRows[i].NIS+"%0A"+"*NAMA : *"+excelRows[i].NAMA+"%0A"+"*TGL LAHIR : *"+excelRows[i].TGL_LAHIR.toString();
+		   pesan="*DATA SISWA*%0A`----------------------------%0ANIS       : "+excelRows[i].NIS+"%0A"+"NAMA      : "+excelRows[i].NAMA+"%0A"+"TGL.LAHIR : "+excelRows[i].TGL_LAHIR.toString()+"%0A----------------------------%0A`";
 		    if(excelRows[i].ID_FOTO==undefined){ sendtele(id,pesan,0,0)}
 			else { sendtele(id,pesan,1,excelRows[i].ID_FOTO)}
 		 }  
 	}
-    if (bb==0){pesan="Maaf NIS : *"+pesan+"* tidak ditemukan";sendtele(id,pesan,0,0)}
+    if (bb==0){pesan="Maaf (` NIS:"+pesan+"` ) tidak ditemukan";sendtele(id,pesan,0,0)}
 }
  function gosimp(){
  var dgg=document.getElementById('token').value;
  mytoken="https://api.telegram.org/bot"+dgg;
 if (dgg == ""){
  alert("Token tidak boleh kosong")}
- else{localStorage.setItem('token',dgg)
-  alert("Token berhasil disimpan")}
+ else{
+ try {
+ localStorage.setItem('token',dgg); alert("Token berhasil disimpan") }
+catch(e){ alert("Gagal disimpan")}}
  }
 function goupdate(){
-localStorage.setItem('dataxls',JSON.stringify(excelRows))  
+try {
+localStorage.setItem('dataxls',JSON.stringify(excelRows)); alert("Token berhasil disimpan") }
+catch(e){ alert("Gagal disimpan")}
 }
 function start() {
   var keyboard ={
