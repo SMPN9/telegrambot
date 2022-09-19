@@ -1,10 +1,10 @@
-
-
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>BotTelegram</title><link rel="stylesheet" href="kertasF4.css"><script src="jsxls1.js"></script><script src="jsxls2.js"></script>
+    <title>BotTelegram</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="kertasF4.css"><script src="jsxls1.js"></script><script src="jsxls2.js"></script>
  <style>
 #b2,#b1,#b14,#b15{border:none;background:green;color:white;font-size:20px;padding:5px;border-radius:5px;margin:5px}
 #b13,#b133, #b133{border:none;background:green;color:white;font-size:20px;padding:5px 70px;border-radius:5px;margin:5px}
@@ -49,14 +49,14 @@ table td:nth-child(1) {  font-weight:bold;text-align:center;
 	#b13,#b133{display:none}
 	</style>    
   <center>
-<button  id="b2" onclick="ddw()">Download Telegrambot.xlsx</button><br/>
-<input type="text" id="token" placeholder="Masukkan Token Bot di sini"  /><button id="b15" onclick="gosimp()">Simpan Token </button><br/>
+<button  id="b2" onclick="ddw()"><i class="fa fa-download" style="font-size:20px"></i>  Download Telegrambot.xlsx</button><br/>
+<input type="text" id="token" placeholder="Masukkan Token Bot di sini"  /><button id="b15" onclick="gosimp()"><i class="fa fa-check-square-o" style="font-size:20px"></i>   Simpan Token </button><br/>
 <input type="file"  style='display:none' onchange="Upload()" id="fileUpload" />
- <button id="b14" onclick="file.click()">Cari File </button><br/>
-<button id="b13" onclick="stop=1;gotele();this.style.display='none'">Start Bot</button><br/>
-<button id="b133" onclick="stop=0;this.style.display='none'">Stop Bot</button><br/>
-<table id='tb' border='1'><tr><th style="background:green;text-align:left" colspan="4">Chat Masuk</th></tr><tr><th>N0</th><th>ID</th><th>PESAN</th><th>ID FOTO</th></tr></table><p/><br/>
-<table id='tbs' border='1'><tr><th style="background:green;text-align:left" colspan="4">Data Excel</th></tr><tr><th>NIS</th><th>NAMA</th><th>TGL_LAHIR</th><th>ID_FOTO</th></tr></table><p/><br/>
+ <button id="b14" onclick="file.click()"><i class="fa fa-file-excel-o" style="font-size:20px"></i> Cari File </button><br/>
+<button id="b13" onclick="stop=1;gotele();this.style.display='none'"><i class="fa fa-toggle-right" style="font-size:20px"></i>   Start Bot</button><br/>
+<button id="b133" onclick="stop=0;this.style.display='none'"><i class="fa fa-spinner fa-spin" style="font-size:20px"></i> Stop Bot</button><br/>
+<table id='tb' border='1'><tr><th style="background:green;text-align:left;font-size:20px" colspan="4"><i class="fa fa-vcard-o" style="font-size:20px"></i> Chat Masuk</th></tr><tr><th>N0</th><th>ID</th><th>PESAN</th><th>ID FOTO</th></tr></table><p/><br/>
+<table id='tbs' border='1'><tr><th style="background:green;text-align:left;font-size:20px" colspan="4"><i class="fa fa-newspaper-o" style="font-size:20px"></i>  Data Excel</th></tr><tr><th>NIS</th><th>NAMA</th><th>TGL_LAHIR</th><th>ID_FOTO</th></tr></table><p/><br/>
 </center>
     <script>
 	var isitbl='';
