@@ -41,6 +41,7 @@
         // Jika Anda ingin menampilkan info pengguna
         window.onload = function() {
             const user = window.Telegram.WebApp.initDataUnsafe.user;
+            alert(user)
             if (user) {
                 console.log("Pengguna:", user);
             }
