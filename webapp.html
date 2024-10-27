@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Web App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Kiriman Data Telegram Web App</h1>
+    <button id="sendDataButton">Kirim Data</button>
+
+    <script>
+        const sendDataButton = document.getElementById('sendDataButton');
+
+        sendDataButton.addEventListener('click', () => {
+            const data = {
+                message: "Halo dari Web App!",
+                timestamp: new Date().toISOString()
+            };
+
+            window.Telegram.WebApp.sendData(JSON.stringify(data));
+        });
+
+        // Jika Anda ingin menampilkan info pengguna
+        window.onload = function() {
+            const user = window.Telegram.WebApp.initDataUnsafe.user;
+            if (user) {
+                console.log("Pengguna:", user);
+            }
+        };
+    </script>
+
+</body>
+</html>
