@@ -27,6 +27,8 @@
     <button id="sendDataButton">Kirim Data</button>
 
     <script>
+        window.Telegram.WebApp.init(); // Inisialisasi Web App
+
         const sendDataButton = document.getElementById('sendDataButton');
 
         sendDataButton.addEventListener('click', () => {
@@ -34,14 +36,12 @@
                 message: "Halo dari Web App!",
                 timestamp: new Date().toISOString()
             };
-            alert(window.location.href)
+
             window.Telegram.WebApp.sendData(JSON.stringify(data));
         });
 
-        // Jika Anda ingin menampilkan info pengguna
         window.onload = function() {
             const user = window.Telegram.WebApp.initDataUnsafe.user;
-            alert(user)
             if (user) {
                 console.log("Pengguna:", user);
             }
